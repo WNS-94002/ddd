@@ -52,13 +52,16 @@ body::after {
 #errorBanner {
   display:none; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.3);
   border-radius:2px; padding:12px 16px; margin:16px 0;
-  font-family:var(--mono); font-size:11px; color:#fca5a5; line-height:1.6;
+  font-family:var(--mono); font-size:11px; color:#fca5a5; line-height:1.8;
 }
 
 .page { position:relative; z-index:1; max-width:1440px; margin:0 auto; padding:0 32px 80px; }
 
 /* HEADER */
-header { padding:36px 0 28px; border-bottom:1px solid var(--border); display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+header {
+  padding:36px 0 28px; border-bottom:1px solid var(--border);
+  display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap;
+}
 .tag { font-family:var(--mono); font-size:10px; letter-spacing:4px; color:var(--accent); text-transform:uppercase; margin-bottom:6px; display:flex; align-items:center; gap:8px; }
 .tag::before { content:''; display:inline-block; width:20px; height:2px; background:var(--accent); }
 h1 { font-family:var(--cond); font-size:clamp(48px,7vw,88px); font-weight:900; line-height:0.9; color:var(--white); letter-spacing:-1px; text-transform:uppercase; }
@@ -94,31 +97,43 @@ h1 .outline { -webkit-text-stroke:1.5px var(--white); color:transparent; }
 .sec-label { font-family:var(--cond); font-size:11px; font-weight:700; letter-spacing:4px; color:var(--muted); text-transform:uppercase; display:flex; align-items:center; gap:12px; margin:32px 0 16px; }
 .sec-label::after { content:''; flex:1; height:1px; background:var(--border); }
 
-/* CARD */
-.charts-row { display:grid; grid-template-columns:1fr 380px; gap:16px; margin-bottom:16px; }
-@media(max-width:1000px){ .charts-row { grid-template-columns:1fr; } }
+/* CARDS */
 .card { background:var(--surface); border:1px solid var(--border); border-radius:2px; padding:24px; position:relative; overflow:hidden; }
 .card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--accent) 0%,transparent 60%); }
 .card-title { font-family:var(--cond); font-size:16px; font-weight:700; letter-spacing:1px; color:var(--white); text-transform:uppercase; margin-bottom:4px; }
 .card-desc  { font-size:11px; color:var(--muted); margin-bottom:20px; font-family:var(--mono); }
 
-/* BULLET */
-.bullet-list { display:flex; flex-direction:column; gap:12px; }
-.bullet-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px; gap:8px; }
-.bullet-name { font-size:11px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:220px; }
-.bullet-nums { font-family:var(--mono); font-size:10px; color:var(--muted); white-space:nowrap; }
-.bullet-track { height:14px; background:var(--surface2); border-radius:1px; position:relative; }
-.bullet-budget { position:absolute; top:3px; left:0; height:8px; background:rgba(184,245,61,0.15); border-radius:1px; }
-.bullet-actual { position:absolute; top:0; left:0; height:14px; border-radius:1px; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); }
-.fill-ok   { background:var(--accent); }
-.fill-warn { background:var(--warn); }
-.fill-over { background:var(--danger); }
+/* CHARTS ROW — Doughnut + Bullet side by side */
+.analysis-row { display:grid; grid-template-columns:340px 1fr; gap:16px; margin-bottom:16px; }
+@media(max-width:1000px){ .analysis-row { grid-template-columns:1fr; } }
 
-/* SUMMARY */
-.summary-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
-.sum-box { background:var(--surface2); border:1px solid var(--border); border-radius:2px; padding:14px; text-align:center; }
-.sum-num { font-family:var(--cond); font-size:28px; font-weight:800; line-height:1; }
-.sum-lbl { font-size:10px; color:var(--muted); font-family:var(--mono); margin-top:4px; }
+/* DOUGHNUT */
+.donut-wrap { display:flex; flex-direction:column; align-items:center; }
+.donut-canvas-wrap { position:relative; width:100%; max-width:280px; margin:0 auto; }
+.donut-center {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  text-align:center; pointer-events:none;
+}
+.donut-center-val { font-family:var(--cond); font-size:26px; font-weight:800; color:var(--white); line-height:1; }
+.donut-center-lbl { font-family:var(--mono); font-size:9px; color:var(--muted); letter-spacing:1px; margin-top:2px; }
+
+/* SUMMARY BOXES */
+.summary-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; width:100%; }
+.sum-box { background:var(--surface2); border:1px solid var(--border); border-radius:2px; padding:12px; text-align:center; }
+.sum-num { font-family:var(--cond); font-size:26px; font-weight:800; line-height:1; }
+.sum-lbl { font-size:9px; color:var(--muted); font-family:var(--mono); margin-top:4px; letter-spacing:1px; }
+
+/* BULLET */
+.bullet-list { display:flex; flex-direction:column; gap:14px; }
+.bullet-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px; gap:8px; }
+.bullet-name { font-size:11px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:260px; }
+.bullet-nums { font-family:var(--mono); font-size:10px; color:var(--muted); white-space:nowrap; flex-shrink:0; }
+.bullet-track { height:16px; background:var(--surface2); border-radius:2px; position:relative; }
+.bullet-budget { position:absolute; top:4px; left:0; height:8px; background:rgba(184,245,61,0.12); border-radius:1px; }
+.bullet-actual { position:absolute; top:0; left:0; height:16px; border-radius:2px; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); }
+.fill-ok   { background:linear-gradient(90deg,#7aaf22,#b8f53d); }
+.fill-warn { background:linear-gradient(90deg,#d97706,#f59e0b); }
+.fill-over { background:linear-gradient(90deg,#dc2626,#ef4444); }
 
 /* TABLE */
 .table-card { background:var(--surface); border:1px solid var(--border); border-radius:2px; overflow:hidden; position:relative; }
@@ -146,10 +161,10 @@ td.no  { font-family:var(--mono); font-size:10px; color:var(--muted); width:40px
 .link-btn svg { width:10px; height:10px; }
 .var-pos { color:#22c55e; }
 .var-neg { color:var(--danger); }
-.pct-bar { display:flex; align-items:center; gap:6px; min-width:80px; }
+.pct-bar { display:flex; align-items:center; gap:6px; min-width:90px; }
 .mini-track { flex:1; height:4px; background:var(--surface2); border-radius:2px; overflow:hidden; }
 .mini-fill  { height:100%; border-radius:2px; transition:width 1s ease; }
-.mini-pct   { font-family:var(--mono); font-size:9px; color:var(--muted); white-space:nowrap; min-width:34px; text-align:right; }
+.mini-pct   { font-family:var(--mono); font-size:9px; white-space:nowrap; min-width:36px; text-align:right; }
 
 /* FOOTER */
 footer { border-top:1px solid var(--border); padding:20px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:40px; }
@@ -170,6 +185,7 @@ footer { border-top:1px solid var(--border); padding:20px 0; display:flex; justi
 
 <div class="page">
 
+<!-- HEADER -->
 <header>
   <div class="header-brand">
     <div class="tag">Cost Performance Report · 2026</div>
@@ -185,6 +201,7 @@ footer { border-top:1px solid var(--border); padding:20px 0; display:flex; justi
 
 <div id="errorBanner"></div>
 
+<!-- KPI STRIP -->
 <div class="kpi-strip">
   <div class="kpi kpi-accent" data-n="01">
     <div class="kpi-tag">Total Budget</div>
@@ -213,18 +230,22 @@ footer { border-top:1px solid var(--border); padding:20px 0; display:flex; justi
   </div>
 </div>
 
-<div class="sec-label">Budget vs Actual Analysis</div>
-<div class="charts-row">
-  <div class="card">
-    <div class="card-title">Top Items — Budget vs Actual</div>
-    <div class="card-desc">เปรียบเทียบ 10 รายการที่มีมูลค่าสูงสุด</div>
-    <canvas id="barChart" height="300"></canvas>
-  </div>
+<!-- ANALYSIS: Doughnut + Bullet -->
+<div class="sec-label">Cost Analysis</div>
+<div class="analysis-row">
+
+  <!-- Doughnut -->
   <div class="card">
     <div class="card-title">Actual Breakdown</div>
     <div class="card-desc">สัดส่วนค่าใช้จ่ายจริงตามรายการ</div>
-    <canvas id="doughnutChart" height="220"></canvas>
-    <div style="margin-top:16px;">
+    <div class="donut-wrap">
+      <div class="donut-canvas-wrap">
+        <canvas id="doughnutChart"></canvas>
+        <div class="donut-center">
+          <div class="donut-center-val" id="donutCenterVal">—</div>
+          <div class="donut-center-lbl">ACTUAL</div>
+        </div>
+      </div>
       <div class="summary-grid">
         <div class="sum-box">
           <div class="sum-num" id="s-over" style="color:var(--danger)">—</div>
@@ -234,18 +255,26 @@ footer { border-top:1px solid var(--border); padding:20px 0; display:flex; justi
           <div class="sum-num" id="s-under" style="color:var(--accent)">—</div>
           <div class="sum-lbl">UNDER BUDGET</div>
         </div>
+        <div class="sum-box" style="grid-column:span 2;">
+          <div class="sum-num" id="s-pending" style="color:var(--muted)">—</div>
+          <div class="sum-lbl">PENDING (ยังไม่มี Actual)</div>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Bullet Progress -->
+  <div class="card">
+    <div class="card-title">Spending Progress</div>
+    <div class="card-desc">รายการที่มี Actual — เรียงตาม % การใช้งบ (แถบเขียว=Budget, สีทึบ=Actual)</div>
+    <div class="bullet-list" id="bulletList">
+      <div style="color:var(--muted);font-family:var(--mono);font-size:11px;">กำลังโหลด...</div>
+    </div>
+  </div>
+
 </div>
 
-<div class="sec-label">Budget Utilization — Actual Items Only</div>
-<div class="card" style="margin-bottom:16px;">
-  <div class="card-title">Spending Progress</div>
-  <div class="card-desc">รายการที่มี Actual — เรียงตาม % การใช้งบ</div>
-  <div class="bullet-list" id="bulletList"></div>
-</div>
-
+<!-- TABLE -->
 <div class="sec-label">Full Line Item Details</div>
 <div class="table-card">
   <div class="table-header">
@@ -264,12 +293,12 @@ footer { border-top:1px solid var(--border); padding:20px 0; display:flex; justi
     <table>
       <thead>
         <tr>
-          <th>NO.</th>
+          <th style="width:44px">NO.</th>
           <th>Description</th>
           <th class="r">Budget (฿)</th>
           <th class="r">Actual (฿)</th>
           <th class="r">Variance</th>
-          <th>% Used</th>
+          <th style="min-width:110px">% Used</th>
           <th>Vendor</th>
           <th>Ref.</th>
         </tr>
@@ -286,51 +315,75 @@ footer { border-top:1px solid var(--border); padding:20px 0; display:flex; justi
 </div>
 
 <script>
-// ═══════════════════════════════════════
-// CONFIG — เปลี่ยน URL ได้ตรงนี้เลย
-// ═══════════════════════════════════════
+// ═══════════════════════════════════════════════
+// CONFIG
+// คอลัมน์ใน Sheet: NO(0) | DESCRIPTION(1) | BUDGET(2) | #(3) | ACTUAL(4) | VENDOR(5) | LINK(6)
+// ═══════════════════════════════════════════════
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR7kIE3GMV9KFt4vnK5OJzkyx9-B0Ufh9zfXDVx_VYcAp8lXj-lpLnCtv8i0Dm_kqUZQC3wxd_oj8Hy/pub?gid=0&single=true&output=csv';
 
-// ═══════════════════════════════════════
+// ═══════════════════════════════════════════════
 // UTILS
-// ═══════════════════════════════════════
-const fmt = v => v == null ? '—' : '฿' + Number(v).toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2});
-const fmtM = v => { if(!v&&v!==0) return '—'; const a=Math.abs(v); return a>=1e6?(v/1e6).toFixed(2)+'M':a>=1e3?(v/1e3).toFixed(1)+'K':v.toFixed(0); };
-const fmtS = v => { if(!v&&v!==0) return '—'; const a=Math.abs(v),s=v<0?'-':''; return a>=1e6?s+'฿'+(a/1e6).toFixed(2)+'M':a>=1e3?s+'฿'+(a/1e3).toFixed(1)+'K':s+'฿'+a.toFixed(0); };
+// ═══════════════════════════════════════════════
+const fmt  = v => v == null ? '—' : '฿' + Number(v).toLocaleString('th-TH', {minimumFractionDigits:2, maximumFractionDigits:2});
+const fmtM = v => { if(v==null) return '—'; const a=Math.abs(v); return a>=1e6?(v/1e6).toFixed(2)+'M':a>=1e3?(v/1e3).toFixed(1)+'K':v.toFixed(0); };
+const fmtS = v => { if(v==null) return '—'; const a=Math.abs(v),s=v<0?'-':''; return a>=1e6?s+'฿'+(a/1e6).toFixed(2)+'M':a>=1e3?s+'฿'+(a/1e3).toFixed(1)+'K':s+'฿'+a.toFixed(0); };
 
-// ═══════════════════════════════════════
+// ═══════════════════════════════════════════════
 // CSV PARSER
-// ═══════════════════════════════════════
+// Header Row: NO, DESCRIPTION, BUDGET, #, ACTUAL, VENDOR, LINK
+// idx:         0       1          2     3    4        5      6
+// ═══════════════════════════════════════════════
 function parseCSV(text) {
   return text.trim().split('\n').map(line => {
-    const cols=[];let cur='',inQ=false;
-    for(const c of line){ if(c==='"')inQ=!inQ; else if(c===','&&!inQ){cols.push(cur.trim());cur='';}else cur+=c; }
+    const cols=[]; let cur='', inQ=false;
+    for(const c of line){
+      if(c==='"') inQ=!inQ;
+      else if(c===','&&!inQ){ cols.push(cur.trim()); cur=''; }
+      else cur+=c;
+    }
     cols.push(cur.trim()); return cols;
   });
 }
-function parseNum(s) { if(!s||!s.trim())return null; const n=parseFloat(String(s).replace(/[^0-9.-]/g,'')); return isNaN(n)?null:n; }
-function csvToData(rows) {
-  return rows.slice(1).filter(r=>r[0]&&r[0].trim()&&!isNaN(parseInt(r[0]))).map(r=>({
-    no:     parseInt(r[0]),
-    desc:   (r[1]||'').replace(/^"|"$/g,'').trim(),
-    budget: parseNum(r[2]),
-    actual: parseNum(r[4]),
-    vendor: (r[5]||'').replace(/^"|"$/g,'').trim()||null,
-    link:   (r[6]||'').replace(/^"|"$/g,'').trim()||null,
-  })).filter(d=>d.no>0&&d.desc);
+
+function parseNum(s) {
+  if(!s || !String(s).trim()) return null;
+  const n = parseFloat(String(s).replace(/[^0-9.-]/g,''));
+  return isNaN(n) ? null : n;
 }
 
-// ═══════════════════════════════════════
+function clean(s) { return (s||'').replace(/^"|"$/g,'').trim(); }
+
+function csvToData(rows) {
+  // rows[0] = header, skip it
+  // col mapping: 0=NO, 1=DESCRIPTION, 2=BUDGET, 3=#(ignore), 4=ACTUAL, 5=VENDOR, 6=LINK
+  return rows.slice(1)
+    .filter(r => r[0] && clean(r[0]) && !isNaN(parseInt(clean(r[0]))))
+    .map(r => ({
+      no:     parseInt(clean(r[0])),
+      desc:   clean(r[1]),
+      budget: parseNum(r[2]),   // col 2 = BUDGET
+      actual: parseNum(r[4]),   // col 4 = ACTUAL (skip col 3 = #)
+      vendor: clean(r[5]) || null,  // col 5 = VENDOR
+      link:   clean(r[6]) || null,  // col 6 = LINK
+    }))
+    .filter(d => d.no > 0 && d.desc);
+}
+
+// ═══════════════════════════════════════════════
 // UI STATE
-// ═══════════════════════════════════════
+// ═══════════════════════════════════════════════
 function setLoading(on) { document.getElementById('loadingOverlay').style.display = on?'flex':'none'; }
-function setError(msg)  { const e=document.getElementById('errorBanner'); e.innerHTML=msg?'⚠ '+msg:''; e.style.display=msg?'block':'none'; }
+function setError(msg)  {
+  const e = document.getElementById('errorBanner');
+  e.innerHTML = msg ? '⚠ ' + msg : '';
+  e.style.display = msg ? 'block' : 'none';
+}
 
-let barInst=null, doughInst=null;
+let doughInst = null;
 
-// ═══════════════════════════════════════
-// FETCH & RENDER
-// ═══════════════════════════════════════
+// ═══════════════════════════════════════════════
+// FETCH
+// ═══════════════════════════════════════════════
 async function loadAndRender() {
   setLoading(true); setError('');
   try {
@@ -344,117 +397,162 @@ async function loadAndRender() {
     document.getElementById('dataSource').textContent = '● LIVE · Google Sheets · ' + new Date().toLocaleTimeString('th-TH');
     document.getElementById('dataSource').style.color = '#b8f53d';
   } catch(e) {
-    setError('โหลดข้อมูลไม่สำเร็จ: <strong>'+e.message+'</strong><br>ตรวจสอบว่า Sheet ถูก Publish แล้ว (File → Share → Publish to web → CSV)');
+    setError('โหลดข้อมูลไม่สำเร็จ: <strong>'+e.message+'</strong><br>ตรวจสอบว่า Sheet ถูก Publish แล้ว หรือใช้ Apps Script URL แทน');
     document.getElementById('dataSource').textContent = '● ERROR — เชื่อมต่อไม่ได้';
     document.getElementById('dataSource').style.color = '#ef4444';
   } finally { setLoading(false); }
 }
 
-// ═══════════════════════════════════════
+// ═══════════════════════════════════════════════
 // RENDER
-// ═══════════════════════════════════════
+// ═══════════════════════════════════════════════
 function render(DATA) {
-  const totB = DATA.reduce((s,d)=>s+(d.budget||0),0);
-  const totA = DATA.reduce((s,d)=>s+(d.actual||0),0);
-  const vari = totB - totA;
-  const pct  = totB>0?(totA/totB*100):0;
-  const wA   = DATA.filter(d=>d.actual!=null&&d.budget>0);
-  const over = wA.filter(d=>d.actual>d.budget);
-  const undr = wA.filter(d=>d.actual<=d.budget&&d.actual>0);
+  const totB    = DATA.reduce((s,d) => s+(d.budget||0), 0);
+  const totA    = DATA.reduce((s,d) => s+(d.actual||0), 0);
+  const vari    = totB - totA;
+  const pct     = totB > 0 ? (totA/totB*100) : 0;
+  const hasAct  = DATA.filter(d => d.actual != null);
+  const over    = hasAct.filter(d => d.budget > 0 && d.actual > d.budget);
+  const under   = hasAct.filter(d => d.budget > 0 && d.actual <= d.budget && d.actual > 0);
+  const pending = DATA.filter(d => d.actual == null);
 
   // KPIs
   document.getElementById('k-budget').textContent   = fmtS(totB);
   document.getElementById('k-actual').textContent   = fmtS(totA);
   document.getElementById('k-variance').textContent = (vari>=0?'+':'')+fmtS(Math.abs(vari));
   document.getElementById('k-pct').textContent      = pct.toFixed(1)+'%';
-  document.getElementById('k-items').textContent    = DATA.filter(d=>d.actual!=null).length+' / '+DATA.length;
+  document.getElementById('k-items').textContent    = hasAct.length+' / '+DATA.length;
   document.getElementById('k-var-badge').innerHTML  = vari>=0
     ? '<span class="badge badge-accent">▲ Under Budget</span>'
     : '<span class="badge badge-red">▼ Over Budget</span>';
-  document.getElementById('s-over').textContent  = over.length;
-  document.getElementById('s-under').textContent = undr.length;
+
+  // Summary boxes
+  document.getElementById('s-over').textContent    = over.length;
+  document.getElementById('s-under').textContent   = under.length;
+  document.getElementById('s-pending').textContent = pending.length;
+  document.getElementById('donutCenterVal').textContent = fmtM(totA);
+
+  // Table subtitle
   document.getElementById('tableSubtitle').textContent = 'CRUSHER_M_COST · '+DATA.length+' Items';
+
   const now = new Date();
   document.getElementById('reportDate').textContent = 'Report Date: '+now.toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'});
   document.getElementById('footDate').textContent   = 'Generated '+now.toLocaleString('th-TH');
 
-  // Bar Chart
-  const top10 = [...DATA].filter(d=>d.budget>0).sort((a,b)=>b.budget-a.budget).slice(0,10);
-  if(barInst) barInst.destroy();
-  barInst = new Chart(document.getElementById('barChart').getContext('2d'),{
-    type:'bar',
-    data:{ labels:top10.map(d=>d.desc.length>22?d.desc.substring(0,22)+'…':d.desc),
-      datasets:[
-        { label:'Budget', data:top10.map(d=>d.budget), backgroundColor:'rgba(184,245,61,0.18)', borderColor:'rgba(184,245,61,0.6)', borderWidth:1, borderRadius:1 },
-        { label:'Actual', data:top10.map(d=>d.actual||0),
-          backgroundColor:top10.map(d=>!d.actual?'rgba(90,110,90,0.3)':d.actual>d.budget?'rgba(239,68,68,0.7)':'rgba(34,197,94,0.7)'),
-          borderColor:top10.map(d=>!d.actual?'rgba(90,110,90,0.5)':d.actual>d.budget?'#ef4444':'#22c55e'),
-          borderWidth:1, borderRadius:1 }
-      ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{ legend:{labels:{color:'#5a6e5a',font:{family:'JetBrains Mono',size:10}}},
-        tooltip:{backgroundColor:'#141814',borderColor:'#252d25',borderWidth:1,titleColor:'#b8f53d',bodyColor:'#d4ddd4',
-          callbacks:{label:ctx=>` ${ctx.dataset.label}: ฿${ctx.raw.toLocaleString('th-TH',{minimumFractionDigits:2})}`}}},
-      scales:{x:{grid:{color:'#1a1f1a'},ticks:{color:'#5a6e5a',font:{size:9},maxRotation:30}},
-              y:{grid:{color:'#1a1f1a'},ticks:{color:'#5a6e5a',font:{family:'JetBrains Mono',size:9},callback:v=>'฿'+fmtM(v)}}}}
-  });
-
-  // Doughnut
-  const aItems = DATA.filter(d=>d.actual>0);
+  // ── Doughnut ──
+  const aItems = DATA.filter(d => d.actual > 0);
   if(doughInst) doughInst.destroy();
-  doughInst = new Chart(document.getElementById('doughnutChart').getContext('2d'),{
-    type:'doughnut',
-    data:{ labels:aItems.map(d=>d.desc.length>18?d.desc.substring(0,18)+'…':d.desc),
-      datasets:[{data:aItems.map(d=>d.actual),backgroundColor:['#b8f53d','#22c55e','#60a5fa','#f59e0b','#ef4444','#a78bfa','#f472b6','#34d399'],borderWidth:0}]},
-    options:{responsive:true,cutout:'68%',
-      plugins:{legend:{position:'bottom',labels:{color:'#5a6e5a',font:{size:9},boxWidth:10,padding:8}},
-        tooltip:{backgroundColor:'#141814',borderColor:'#252d25',borderWidth:1,titleColor:'#b8f53d',bodyColor:'#d4ddd4',
-          callbacks:{label:ctx=>` ฿${ctx.raw.toLocaleString('th-TH',{minimumFractionDigits:2})}`}}}}
+  const COLORS = ['#b8f53d','#22c55e','#60a5fa','#f59e0b','#ef4444','#a78bfa','#f472b6','#34d399','#fb923c','#38bdf8'];
+  doughInst = new Chart(document.getElementById('doughnutChart').getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels: aItems.map(d => d.desc.length>20 ? d.desc.substring(0,20)+'…' : d.desc),
+      datasets: [{
+        data: aItems.map(d => d.actual),
+        backgroundColor: aItems.map((_,i) => COLORS[i % COLORS.length]),
+        borderWidth: 0,
+        hoverOffset: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      cutout: '62%',
+      plugins: {
+        legend: { position:'bottom', labels:{ color:'#5a6e5a', font:{size:9}, boxWidth:10, padding:10 } },
+        tooltip: {
+          backgroundColor:'#141814', borderColor:'#252d25', borderWidth:1,
+          titleColor:'#b8f53d', bodyColor:'#d4ddd4',
+          callbacks: { label: ctx => ` ฿${Number(ctx.raw).toLocaleString('th-TH',{minimumFractionDigits:2})}` }
+        }
+      }
+    }
   });
 
-  // Bullet
-  const bData = DATA.filter(d=>d.actual!=null&&d.budget>0&&d.actual>0).map(d=>({...d,up:d.actual/d.budget*100})).sort((a,b)=>b.up-a.up);
-  document.getElementById('bulletList').innerHTML = bData.map(d=>{
-    const w=Math.min(d.up,100), cls=d.up>100?'fill-over':d.up>85?'fill-warn':'fill-ok';
-    const n=d.desc.length>35?d.desc.substring(0,35)+'…':d.desc;
-    return `<div class="bullet-item"><div class="bullet-head"><span class="bullet-name" title="${d.desc}">${n}</span><span class="bullet-nums">${fmt(d.actual)} / ${fmt(d.budget)}</span></div><div class="bullet-track"><div class="bullet-budget" style="width:100%"></div><div class="bullet-actual ${cls}" style="width:${w}%"></div></div></div>`;
-  }).join('');
+  // ── Bullet Progress ──
+  const bData = DATA
+    .filter(d => d.actual != null && d.budget > 0 && d.actual > 0)
+    .map(d => ({...d, up: d.actual/d.budget*100}))
+    .sort((a,b) => b.up - a.up);
 
-  // Table
-  const ICON_LINK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+  document.getElementById('bulletList').innerHTML = bData.length > 0
+    ? bData.map(d => {
+        const w   = Math.min(d.up, 100);
+        const cls = d.up > 100 ? 'fill-over' : d.up > 85 ? 'fill-warn' : 'fill-ok';
+        const pc  = d.up > 100 ? '#ef4444' : d.up > 85 ? '#f59e0b' : '#b8f53d';
+        const n   = d.desc.length > 40 ? d.desc.substring(0,40)+'…' : d.desc;
+        return `<div class="bullet-item">
+          <div class="bullet-head">
+            <span class="bullet-name" title="${d.desc}">${n}</span>
+            <span class="bullet-nums" style="color:${pc}">${d.up.toFixed(0)}% · ${fmt(d.actual)}</span>
+          </div>
+          <div class="bullet-track">
+            <div class="bullet-budget" style="width:100%"></div>
+            <div class="bullet-actual ${cls}" style="width:${w}%"></div>
+          </div>
+        </div>`;
+      }).join('')
+    : `<div style="color:var(--muted);font-family:var(--mono);font-size:11px;padding:20px 0;">ยังไม่มีรายการที่มีข้อมูล Actual</div>`;
+
+  // ── Table ──
+  const ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:10px;height:10px"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+
   function row(d) {
-    const hA=d.actual!=null, isO=hA&&d.budget>0&&d.actual>d.budget, isP=!hA;
-    const rv=hA?d.budget-d.actual:null, pu=hA&&d.budget>0?d.actual/d.budget*100:null;
-    const pc=pu==null?'#5a6e5a':pu>100?'#ef4444':pu>85?'#f59e0b':'#b8f53d';
-    const pCell=pu!=null?`<div class="pct-bar"><div class="mini-track"><div class="mini-fill" style="width:${Math.min(pu,100)}%;background:${pc}"></div></div><span class="mini-pct" style="color:${pc}">${pu.toFixed(0)}%</span></div>`:`<span style="font-family:var(--mono);font-size:9px;color:var(--muted)">PENDING</span>`;
-    const vCell=rv!=null?`<td class="num ${rv>=0?'var-pos':'var-neg'}">${(rv>=0?'+':'')+fmtS(Math.abs(rv))}</td>`:`<td class="num" style="color:var(--muted)">—</td>`;
-    const lCell=d.link?`<a class="link-btn" href="${d.link}" target="_blank">${ICON_LINK}PSL</a>`:`<span style="color:var(--muted);font-family:var(--mono);font-size:9px">—</span>`;
-    return `<tr class="${isO?'over-budget':''}" data-cat="${isP?'pending':isO?'over':'actual'}">
+    const hA  = d.actual != null;
+    const isO = hA && d.budget > 0 && d.actual > d.budget;
+    const isP = !hA;
+    const rv  = hA ? d.budget - d.actual : null;
+    const pu  = hA && d.budget > 0 ? d.actual/d.budget*100 : null;
+    const pc  = pu==null ? '#5a6e5a' : pu>100 ? '#ef4444' : pu>85 ? '#f59e0b' : '#b8f53d';
+    const pCell = pu != null
+      ? `<div class="pct-bar">
+           <div class="mini-track"><div class="mini-fill" style="width:${Math.min(pu,100)}%;background:${pc}"></div></div>
+           <span class="mini-pct" style="color:${pc}">${pu.toFixed(0)}%</span>
+         </div>`
+      : `<span style="font-family:var(--mono);font-size:9px;color:var(--muted)">PENDING</span>`;
+    const vCell = rv != null
+      ? `<td class="num ${rv>=0?'var-pos':'var-neg'}">${(rv>=0?'+':'')+fmtS(Math.abs(rv))}</td>`
+      : `<td class="num" style="color:var(--muted)">—</td>`;
+    const lCell = d.link
+      ? `<a class="link-btn" href="${d.link}" target="_blank">${ICON} PSL</a>`
+      : `<span style="color:var(--muted);font-family:var(--mono);font-size:9px">—</span>`;
+    const cat = isP ? 'pending' : isO ? 'over' : 'actual';
+    return `<tr class="${isO?'over-budget':''}" data-cat="${cat}">
       <td class="no">${d.no}</td>
       <td><div class="desc-main">${d.desc}</div>${d.vendor?`<div class="desc-vendor">${d.vendor}</div>`:''}</td>
       <td class="num">${fmt(d.budget)}</td>
       <td class="num" style="color:${hA?(isO?'#ef4444':'#b8f53d'):'var(--muted)'}">${fmt(d.actual)}</td>
-      ${vCell}<td>${pCell}</td>
+      ${vCell}
+      <td>${pCell}</td>
       <td style="color:var(--muted);font-family:var(--mono);font-size:10px">${d.vendor||'—'}</td>
-      <td>${lCell}</td></tr>`;
+      <td>${lCell}</td>
+    </tr>`;
   }
-  const pc2=pct>100?'#ef4444':pct>85?'#f59e0b':'#b8f53d';
-  const tRow=`<tr class="total-row"><td class="no" style="color:var(--accent);font-weight:700">Σ</td>
+
+  const pc2 = pct>100?'#ef4444':pct>85?'#f59e0b':'#b8f53d';
+  const tRow = `<tr class="total-row">
+    <td class="no" style="color:var(--accent);font-weight:700">Σ</td>
     <td><div class="desc-main" style="color:var(--accent);font-family:var(--cond);font-size:14px;letter-spacing:1px">GRAND TOTAL</div></td>
     <td class="num" style="color:var(--white);font-weight:700">${fmt(totB)}</td>
     <td class="num" style="color:var(--white);font-weight:700">${fmt(totA)}</td>
     <td class="num ${vari>=0?'var-pos':'var-neg'}" style="font-weight:700">${(vari>=0?'+':'')+fmtS(Math.abs(vari))}</td>
     <td><div class="pct-bar"><div class="mini-track"><div class="mini-fill" style="width:${Math.min(pct,100)}%;background:${pc2}"></div></div><span class="mini-pct" style="color:${pc2}">${pct.toFixed(1)}%</span></div></td>
-    <td colspan="2"></td></tr>`;
+    <td colspan="2"></td>
+  </tr>`;
+
   document.getElementById('tableBody').innerHTML = DATA.map(row).join('') + tRow;
 }
 
-// Filter
-function filterTable(type,btn) {
-  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));
+// ═══════════════════════════════════════════════
+// FILTER
+// ═══════════════════════════════════════════════
+function filterTable(type, btn) {
+  document.querySelectorAll('.ftab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('#tableBody tr[data-cat]').forEach(tr=>{ tr.style.display=(type==='all'||tr.dataset.cat===type)?'':'none'; });
-  const tr=document.querySelector('.total-row'); if(tr) tr.style.display='';
+  document.querySelectorAll('#tableBody tr[data-cat]').forEach(tr => {
+    tr.style.display = (type==='all' || tr.dataset.cat===type) ? '' : 'none';
+  });
+  const tr = document.querySelector('.total-row');
+  if(tr) tr.style.display = '';
 }
 
 // Init
